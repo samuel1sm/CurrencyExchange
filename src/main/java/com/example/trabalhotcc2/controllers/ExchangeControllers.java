@@ -3,6 +3,7 @@ package com.example.trabalhotcc2.controllers;
 import com.example.trabalhotcc2.dto.CurrencyPercentageDTO;
 import com.example.trabalhotcc2.model.CurrencyConversions;
 import com.example.trabalhotcc2.repositories.ICurrencyConversionsRepository;
+import com.example.trabalhotcc2.utils.exeptions.CurrencyNotExistentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,12 +21,26 @@ public class ExchangeControllers {
 
 	@GetMapping("/{from}/{to}")
 	public ResponseEntity<CurrencyPercentageDTO> getCurrencyPercentage(@PathVariable String from,
-																	   @PathVariable String to) {
+																	   @PathVariable String to)
+																		throws CurrencyNotExistentException {
+
 		Optional<CurrencyConversions> currencyEquals = conversionsRepository.
 				findCurrencyConversionsByFromCurrencyEqualsAndToCurrencyEquals(from, to);
 
-		if (currencyEquals.isEmpty())
-			return ResponseEntity.notFound().build();
+		if (currencyEquals.isEmpty()){
+			CurrencyNotExistentException currencyNotExistentException = new CurrencyNotExistentException();
+			Optional<CurrencyConversions> byFromCurrency = conversionsRepository.findFirstByFromCurrency(from);
+
+			if(byFromCurrency.isEmpty())
+				currencyNotExistentException.addCurrency(from);
+
+			byFromCurrency = conversionsRepository.findFirstByFromCurrency(to);
+
+			if(byFromCurrency.isEmpty())
+				currencyNotExistentException.addCurrency(to);
+
+			throw currencyNotExistentException;
+		}
 
 		CurrencyPercentageDTO currencyPercentageDTO = new CurrencyPercentageDTO(currencyEquals.get());
 		return ResponseEntity.ok(currencyPercentageDTO);

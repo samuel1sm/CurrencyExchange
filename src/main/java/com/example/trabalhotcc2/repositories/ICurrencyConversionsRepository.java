@@ -10,4 +10,7 @@ import java.util.Optional;
 public interface ICurrencyConversionsRepository extends JpaRepository<CurrencyConversions, Long> {
 	Optional<CurrencyConversions> findCurrencyConversionsByFromCurrencyEqualsAndToCurrencyEquals(String fromCurrency,
 																								 String toCurrency);
+
+	Optional<CurrencyConversions> findFirstByFromCurrency(String fromCurrency);
+
 }
