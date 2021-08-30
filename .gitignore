@@ -32,3 +32,5 @@ build/
 ### VS Code ###
 .vscode/
 /Docker/Postgress/
+/src/main/docker/TrabalhoTCC2-0.0.1-SNAPSHOT.jar
+/nul

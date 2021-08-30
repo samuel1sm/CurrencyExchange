@@ -14,7 +14,7 @@
     <name>TrabalhoTCC2</name>
     <description>Demo project for Spring Boot</description>
     <properties>
-        <java.version>16</java.version>
+        <java.version>11</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -60,6 +60,18 @@
     <build>
         <plugins>
             <plugin>
+                <!-- Build an executable JAR -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.example.trabalhotcc2.TrabalhoTcc2Application</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
@@ -71,6 +83,8 @@
                     </excludes>
                 </configuration>
             </plugin>
+
+
         </plugins>
     </build>
 
