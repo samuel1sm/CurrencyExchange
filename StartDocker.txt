@@ -1,6 +1,11 @@
 ./mvnw clean package -DskipTests
 cp target/TrabalhoTCC2-0.0.1-SNAPSHOT.jar src/main/docker
 cd src/main/docker
+
+___Só imagem____
+docker build -t currency/service .
+
+___Compose____
 docker-compose down
 docker rmi trabalho-tcc:latest
 docker-compose up
