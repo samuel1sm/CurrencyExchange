@@ -13,10 +13,4 @@ class CurrencyTestsApplicationTests {
 
 		Assert.isTrue(result);
 	}
-
-	@Test
-	void badTestLoads() {
-		Assert.isTrue(false);
-	}
-
 }
