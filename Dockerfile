@@ -6,6 +6,7 @@ COPY src /workspace/src
 RUN mvn -B package --file pom.xml -DskipTests
 
 FROM openjdk:14-slim
-COPY --from=build /workspace/target/*jar-with-dependencies.jar app.jar
+ARG JAR_FILE=*.jar
+COPY --from=build /workspace/target/${JAR_FILE} app.jar
 EXPOSE 6379
 ENTRYPOINT ["java","-jar","app.jar"]
